@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Global Commodities Monitor</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script src="assets/chart.umd.min.js"></script>
 <style>
 :root {
   --bg: #f5f6f8;
@@ -540,6 +540,7 @@ function openChart(source, id) {
   // Store data globally for range switching
   window._chartData = chartData;
   window._chartUnit = unit;
+  console.log('openChart', source, id, 'points:', chartData.length, 'Chart loaded:', typeof Chart !== 'undefined');
 
   // Open modal first, then render chart (so stats show even if Chart.js fails)
   document.getElementById('modalOverlay').classList.add('active');
