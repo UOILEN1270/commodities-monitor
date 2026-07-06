@@ -4,8 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Global Commodities Monitor</title>
-<script src="https://cdn.bootcdn.net/ajax/libs/Chart.js/4.4.7/chart.umd.min.js"></script>
-<script src="https://cdn.bootcdn.net/ajax/libs/chartjs-adapter-date-fns/3.0.0/chartjs-adapter-date-fns.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <style>
 :root {
   --bg: #f5f6f8;
@@ -575,13 +574,15 @@ function renderChart(months) {
     + '<div class="modal-stat"><div class="val" style="color:var(--text)">' + fmtPrice(avg, unit) + '</div><div class="lbl">均值</div></div>'
     + '<div class="modal-stat"><div class="val" style="color:' + (changePct>=0?'var(--green)':'var(--red)') + '">' + (changePct>=0?'+':'') + changePct.toFixed(2) + '%</div><div class="lbl">区间变动</div></div>';
 
-  const labels = filtered.map(p => p.date);
+  const labels = filtered.map(p => {
+    const d = p.date;
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+  });
   const data = filtered.map(p => p.value);
 
   if (chartInstance) {
     chartInstance.data.labels = labels;
     chartInstance.data.datasets[0].data = data;
-    chartInstance.data.datasets[0].label = chartMeta?.id || '';
     chartInstance.update();
   } else if (typeof Chart !== 'undefined') {
     const ctx = document.getElementById('historyChart').getContext('2d');
@@ -589,14 +590,14 @@ function renderChart(months) {
       type: 'line',
       data: {
         labels,
-        datasets: [{ label: chartMeta?.id||'', data, borderColor:'#e8890c', backgroundColor:'rgba(232,137,12,0.08)', fill:true, tension:0.2, pointRadius:0, pointHitRadius:10, borderWidth:2 }]
+        datasets: [{ data, borderColor:'#e8890c', backgroundColor:'rgba(232,137,12,0.08)', fill:true, tension:0.2, pointRadius:2, pointHitRadius:10, borderWidth:2 }]
       },
       options: {
         responsive: true, maintainAspectRatio: false,
         interaction: { intersect:false, mode:'index' },
         plugins: { legend: { display:false } },
         scales: {
-          x: { type:'time', time:{ unit:months<=3?'week':'month', displayFormats:{month:'yyyy-MM',week:'MM-dd'} }, grid:{display:false}, ticks:{color:'#8e90a6',font:{size:11}} },
+          x: { grid:{display:false}, ticks:{color:'#8e90a6',font:{size:11}, maxTicksLimit:12, autoSkip:true} },
           y: { grid:{color:'#f0f0f5'}, ticks:{color:'#8e90a6',font:{size:11},callback:v=>v.toLocaleString()} }
         }
       }
