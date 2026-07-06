@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Global Commodities Monitor</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/Chart.js/4.4.7/chart.umd.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/chartjs-adapter-date-fns/3.0.0/chartjs-adapter-date-fns.bundle.min.js"></script>
 <style>
 :root {
   --bg: #f5f6f8;
@@ -542,8 +542,9 @@ function openChart(source, id) {
   window._chartData = chartData;
   window._chartUnit = unit;
 
-  renderChart(3); // default 3 months
+  // Open modal first, then render chart (so stats show even if Chart.js fails)
   document.getElementById('modalOverlay').classList.add('active');
+  try { renderChart(3); } catch(e) { console.error('Chart error:', e); }
 }
 
 function renderChart(months) {
@@ -582,7 +583,7 @@ function renderChart(months) {
     chartInstance.data.datasets[0].data = data;
     chartInstance.data.datasets[0].label = chartMeta?.id || '';
     chartInstance.update();
-  } else {
+  } else if (typeof Chart !== 'undefined') {
     const ctx = document.getElementById('historyChart').getContext('2d');
     chartInstance = new Chart(ctx, {
       type: 'line',
