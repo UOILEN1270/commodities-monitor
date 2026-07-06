@@ -2,8 +2,6 @@ name: Fetch Commodities Data
 
 on:
   schedule:
-    # UTC 1:00 → CST 9:00 (亚洲开盘后), UTC 9:00 → CST 17:00 (国内收盘),
-    # UTC 21:00 → CST 5:00+1 (美盘收盘后)
     - cron: '0 1,9,21 * * *'
   workflow_dispatch:
   push:
@@ -11,14 +9,13 @@ on:
     paths:
       - 'scripts/fetch_data.py'
       - '.github/workflows/fetch-data.yml'
+      - 'index.html'
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
 
 jobs:
-  fetch-data:
+  fetch-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -37,7 +34,7 @@ jobs:
       - name: Fetch data
         run: python scripts/fetch_data.py
 
-      - name: Commit and push if changed
+      - name: Commit and push data
         run: |
           git config user.name "commodities-monitor-bot"
           git config user.email "bot@commodities-monitor"
@@ -49,18 +46,10 @@ jobs:
             git push
           fi
 
-  deploy-pages:
-    needs: fetch-data
-    if: always()
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: '.'
-
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: '.'
+          publish_branch: gh-pages
+          exclude_assets: '.github,.gitignore,scripts'
