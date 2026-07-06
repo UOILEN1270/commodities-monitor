@@ -461,12 +461,11 @@ def daily_update():
     except Exception:
         pass
 
-    # Append to history
+    # Append/merge to history
     commodities = history.setdefault("commodities", {})
-    commodities[today_str] = {
-        "global": global_prices,
-        "domestic": domestic_prices,
-    }
+    today_entry = commodities.setdefault(today_str, {})
+    today_entry.setdefault("global", {}).update(global_prices)
+    today_entry.setdefault("domestic", {}).update(domestic_prices)
 
     # Indicators
     indicators = history.setdefault("indicators", {})
@@ -491,4 +490,90 @@ def daily_update():
 
 
 if __name__ == "__main__":
-    daily_update()
+    if "--init" in sys.argv:
+        # Backfill 12 months of history
+        log.info("=" * 60)
+        log.info("INIT — Backfilling 12 months of history")
+        log.info("=" * 60)
+
+        import yfinance as yf
+        from datetime import datetime as dt
+
+        history = {"commodities": {}, "indicators": {}, "meta": {"created": datetime.now().isoformat()}}
+        commodities = history["commodities"]
+
+        # ── Global: yfinance 1y history ──
+        log.info("Fetching 12-month global history via yfinance…")
+        for cid, (ticker_str, name_cn, name_en, unit, cat) in GLOBAL_COMMODITIES.items():
+            try:
+                t = yf.Ticker(ticker_str)
+                hist = t.history(period="1y")
+                if hist.empty:
+                    log.warning(f"  ⚠ {name_cn} ({ticker_str}): no history")
+                    continue
+                count = 0
+                for idx, row in hist.iterrows():
+                    d = idx.strftime("%Y-%m-%d") if hasattr(idx, 'strftime') else str(idx)[:10]
+                    price = float(row["Close"])
+                    commodities.setdefault(d, {}).setdefault("global", {})[cid] = round(price, 2)
+                    count += 1
+                log.info(f"  ✓ {name_cn}: {count} days")
+            except Exception as e:
+                log.warning(f"  ⚠ {name_cn} ({ticker_str}): {e}")
+
+        # ── Domestic: akshare 1y history ──
+        log.info("Fetching 12-month domestic history via akshare…")
+        try:
+            import akshare as ak
+            start_d = (date.today() - timedelta(days=400)).strftime("%Y-%m-%d")
+            for cid, (sina_code, name_cn, unit, cat, pair_id) in DOMESTIC_COMMODITIES.items():
+                try:
+                    df = ak.futures_main_sina(symbol=sina_code, start_date=start_d)
+                    if df is None or df.empty:
+                        log.warning(f"  ⚠ {name_cn} ({sina_code}): no history from akshare")
+                        continue
+                    count = 0
+                    for _, row in df.iterrows():
+                        d = str(row["日期"])[:10]
+                        # Use 收盘价 as the price
+                        price = float(row["收盘价"])
+                        commodities.setdefault(d, {}).setdefault("domestic", {})[cid] = round(price, 2)
+                        count += 1
+                    log.info(f"  ✓ {name_cn}: {count} days")
+                except Exception as e:
+                    log.warning(f"  ⚠ {name_cn} ({sina_code}): {e}")
+        except ImportError:
+            log.warning("akshare not installed — skipping domestic history")
+
+        # ── DXY history ──
+        log.info("Fetching DXY history…")
+        try:
+            t = yf.Ticker("DX-Y.NYB")
+            hist = t.history(period="1y")
+            indicators = history.setdefault("indicators", {})
+            for idx, row in hist.iterrows():
+                d = idx.strftime("%Y-%m-%d") if hasattr(idx, 'strftime') else str(idx)[:10]
+                indicators.setdefault(d, {})["dxy"] = round(float(row["Close"]), 2)
+            log.info(f"  ✓ DXY: {len(hist)} days")
+        except Exception as e:
+            log.warning(f"  ⚠ DXY history: {e}")
+
+        # Sort dates
+        sorted_dates = sorted(commodities.keys())
+        history["commodities"] = {d: commodities[d] for d in sorted_dates}
+
+        save_history(history)
+        fx_rate = USDCNY_FALLBACK
+        try:
+            fx_rate = fetch_fx_rate()
+        except Exception:
+            pass
+        snapshot = build_snapshot(history, fx_rate)
+        save_snapshot(snapshot)
+
+        total_days = len(sorted_dates)
+        log.info(f"INIT COMPLETE — {total_days} days of history")
+        log.info("Running daily update to fill today's data…")
+        daily_update()
+    else:
+        daily_update()
