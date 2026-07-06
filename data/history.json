@@ -2,14 +2,14 @@
   "commodities": {
     "2026-07-06": {
       "global": {
-        "gold": 4175.9,
-        "silver": 62.78,
-        "platinum": 1663.4,
+        "gold": 4172.6,
+        "silver": 62.74,
+        "platinum": 1661.9,
         "palladium": 1292.5,
-        "copper": 6.26,
+        "copper": 6.25,
         "aluminum": 3265.0,
-        "wti": 67.95,
-        "brent": 71.17,
+        "wti": 68.01,
+        "brent": 71.27,
         "natgas": 3.21
       },
       "domestic": {
@@ -32,7 +32,7 @@
   },
   "indicators": {
     "2026-07-06": {
-      "dxy": 101.01
+      "dxy": 101.04
     }
   },
   "meta": {
