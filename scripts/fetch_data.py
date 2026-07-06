@@ -70,6 +70,8 @@ DOMESTIC_COMMODITIES = {
     "hc":    ("HC0",   "热卷",   "元/吨",  "ferrous",     None),
     "i":     ("I0",    "铁矿石", "元/吨",  "ferrous",     None),
     "lc":    ("LC0",   "碳酸锂", "元/吨",  "new_energy",  None),
+    "jm":    ("JM0",   "焦煤",   "元/吨",  "coal",        None),
+    "j":     ("J0",    "焦炭",   "元/吨",  "coal",        None),
 }
 
 # ── Exchange rate for CNY conversion ─────────────────────────────

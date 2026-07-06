@@ -157,7 +157,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); font
   <!-- Ferrous & New Energy -->
   <div class="card">
     <div class="card-title">
-      <span>🏗️ 黑色系 & 新能源 Ferrous & New Energy</span>
+      <span>🏗️ 黑色系 & 煤炭 & 新能源 Ferrous · Coal · New Energy</span>
       <span class="badge" id="ferrousDate">—</span>
     </div>
     <div style="overflow-x:auto">
@@ -300,13 +300,15 @@ const DOMESTIC_META = {
   rb: { name:'螺纹钢',   flag:'🔩', unit:'元/吨', cat:'ferrous', globalId:null },
   hc: { name:'热卷',     flag:'📐', unit:'元/吨', cat:'ferrous', globalId:null },
   i:  { name:'铁矿石',   flag:'⛏️', unit:'元/吨', cat:'ferrous', globalId:null },
+  jm: { name:'焦煤',     flag:'🪨', unit:'元/吨', cat:'coal', globalId:null },
+  j:  { name:'焦炭',     flag:'🔥', unit:'元/吨', cat:'coal', globalId:null },
   lc: { name:'碳酸锂',   flag:'🔋', unit:'元/吨', cat:'new_energy', globalId:null },
 };
 
 const CATEGORY_ORDER = {
   precious:    ['gold','silver','platinum','palladium'],
   industrial:  ['copper','aluminum','zinc','nickel','lead','tin'],
-  ferrous:     ['rb','hc','i','lc'],
+  ferrous:     ['rb','hc','i','jm','j','lc'],
   energy:      ['wti','brent','natgas'],
 };
 
