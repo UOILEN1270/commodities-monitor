@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global Commodities Monitor</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+<style>
+:root {
+  --bg: #f5f6f8;
+  --card: #ffffff;
+  --text: #1a1a2e;
+  --text2: #555770;
+  --text3: #8e90a6;
+  --border: #e4e5ec;
+  --accent: #e8890c;
+  --accent-light: #fff8ed;
+  --green: #0ca56a;
+  --green-bg: #e6f7ef;
+  --red: #e5454a;
+  --red-bg: #fde8e8;
+  --warning: #f5a623;
+  --gold: #d4a017;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --radius: 10px;
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Helvetica Neue', sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.5; padding: 20px; }
+.header { max-width: 1400px; margin: 0 auto 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+.header h1 { font-size: 22px; font-weight: 700; }
+.header .subtitle { color: var(--text2); font-size: 13px; }
+.header .meta { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+.header .update-time { color: var(--text3); font-size: 12px; }
+.alert-badge { display: inline-flex; align-items: center; gap: 4px; background: var(--red-bg); color: var(--red); padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; cursor: pointer; }
+.card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px 20px; margin-bottom: 16px; }
+.card-title { font-size: 13px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+.card-title .badge { font-size: 11px; background: var(--accent-light); color: var(--accent); padding: 2px 8px; border-radius: 6px; font-weight: 500; text-transform: none; letter-spacing: 0; }
+.ctable { width: 100%; border-collapse: collapse; }
+.ctable th { text-align: left; padding: 6px 10px; font-size: 11px; font-weight: 600; color: var(--text3); border-bottom: 1px solid var(--border); white-space: nowrap; }
+.ctable th.right { text-align: right; }
+.ctable td { padding: 7px 10px; border-bottom: 1px solid var(--border); cursor: pointer; transition: background 0.15s; }
+.ctable tr:hover td { background: #f8f9ff; }
+.ctable td:first-child { font-weight: 600; font-size: 13px; white-space: nowrap; }
+.ctable td.right { text-align: right; font-variant-numeric: tabular-nums; }
+.ctable .name-cn { color: var(--text3); font-size: 11px; font-weight: 400; margin-left: 4px; }
+.ctable .price { font-size: 14px; font-weight: 500; }
+.ctable .change { font-size: 12px; font-weight: 500; white-space: nowrap; }
+.up { color: var(--green); }
+.down { color: var(--red); }
+.neutral { color: var(--text3); }
+.spread-table { width: 100%; border-collapse: collapse; }
+.spread-table th { text-align: left; padding: 6px 10px; font-size: 11px; font-weight: 600; color: var(--text3); border-bottom: 1px solid var(--border); }
+.spread-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); font-variant-numeric: tabular-nums; font-size: 14px; }
+.spread-table td:first-child { font-weight: 600; }
+.premium { color: var(--red); }
+.discount { color: var(--green); }
+.rate-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 8px; }
+.rate-item { padding: 10px 12px; border-radius: 8px; background: var(--bg); }
+.rate-item .value { font-size: 18px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.rate-item .label { font-size: 12px; color: var(--text2); margin-top: 2px; }
+.alerts-list { list-style: none; }
+.alerts-list li { padding: 6px 0; font-size: 13px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--border); }
+.alerts-list li:last-child { border-bottom: none; }
+.icon-warn { color: var(--warning); }
+.icon-info { color: var(--accent); }
+.modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; backdrop-filter: blur(2px); }
+.modal-overlay.active { display: flex; }
+.modal { background: var(--card); border-radius: var(--radius); box-shadow: 0 20px 60px rgba(0,0,0,0.2); width: 90%; max-width: 800px; max-height: 85vh; display: flex; flex-direction: column; animation: modalIn 0.2s ease; }
+@keyframes modalIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.modal-header { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+.modal-header h2 { font-size: 16px; font-weight: 600; }
+.modal-close { background: none; border: none; font-size: 20px; cursor: pointer; color: var(--text3); padding: 4px; line-height: 1; }
+.modal-close:hover { color: var(--text); }
+.modal-body { padding: 20px; overflow-y: auto; flex: 1; }
+.modal-stats { display: flex; gap: 24px; margin-bottom: 16px; flex-wrap: wrap; }
+.modal-stat { text-align: center; }
+.modal-stat .val { font-size: 20px; font-weight: 700; }
+.modal-stat .lbl { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.5px; }
+.chart-container { position: relative; height: 380px; }
+.range-selector { display: flex; gap: 6px; margin-bottom: 12px; }
+.range-btn { padding: 4px 12px; border-radius: 6px; border: 1px solid var(--border); background: var(--card); font-size: 12px; cursor: pointer; color: var(--text2); }
+.range-btn:hover { border-color: var(--accent); color: var(--accent); }
+.range-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.container { max-width: 1400px; margin: 0 auto; }
+.footer { text-align: center; padding: 20px; color: var(--text3); font-size: 11px; }
+.tabs { display: flex; gap: 4px; margin-bottom: 12px; }
+.tab-btn { padding: 5px 14px; border-radius: 6px; border: 1px solid var(--border); background: var(--card); font-size: 12px; cursor: pointer; color: var(--text2); transition: all 0.15s; }
+.tab-btn:hover { border-color: var(--accent); }
+.tab-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+@media (max-width: 900px) {
+  .card { padding: 12px 14px; }
+  .ctable { font-size: 12px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div>
+      <h1>📊 全球大宗商品价格监控</h1>
+      <div class="subtitle">Global Commodities Price Monitor · 贵金属 · 工业金属 · 黑色 · 新能源</div>
+    </div>
+    <div class="meta">
+      <span class="update-time" id="updateTime">加载中…</span>
+      <span class="alert-badge" id="alertBadge" style="display:none" onclick="scrollToAlerts()">⚠ <span id="alertCount">0</span></span>
+    </div>
+  </div>
+
+  <!-- Precious Metals -->
+  <div class="card">
+    <div class="card-title">
+      <span>🥇 贵金属 Precious Metals <span style="font-weight:400;color:var(--text3);font-size:12px;text-transform:none">（点击查看历史走势）</span></span>
+      <span class="badge" id="preciousDate">—</span>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="ctable" id="preciousTable">
+        <thead>
+          <tr>
+            <th>品种</th>
+            <th class="right">国际价格</th>
+            <th class="right">国内价格</th>
+            <th class="right">日变动</th>
+            <th class="right">7日变动</th>
+            <th class="right">1月变动</th>
+          </tr>
+        </thead>
+        <tbody id="preciousBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Industrial Metals -->
+  <div class="card">
+    <div class="card-title">
+      <span>🏭 工业金属 Industrial Metals</span>
+      <span class="badge" id="industrialDate">—</span>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="ctable" id="industrialTable">
+        <thead>
+          <tr>
+            <th>品种</th>
+            <th class="right">国际价格</th>
+            <th class="right">国内价格</th>
+            <th class="right">日变动</th>
+            <th class="right">7日变动</th>
+            <th class="right">1月变动</th>
+          </tr>
+        </thead>
+        <tbody id="industrialBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Ferrous & New Energy -->
+  <div class="card">
+    <div class="card-title">
+      <span>🏗️ 黑色系 & 新能源 Ferrous & New Energy</span>
+      <span class="badge" id="ferrousDate">—</span>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="ctable" id="ferrousTable">
+        <thead>
+          <tr>
+            <th>品种</th>
+            <th class="right">国内价格</th>
+            <th class="right">日变动</th>
+            <th class="right">7日变动</th>
+            <th class="right">1月变动</th>
+          </tr>
+        </thead>
+        <tbody id="ferrousBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Energy (simplified) -->
+  <div class="card">
+    <div class="card-title">
+      <span>⛽ 能源 Energy</span>
+      <span class="badge" id="energyDate">—</span>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="ctable" id="energyTable">
+        <thead>
+          <tr>
+            <th>品种</th>
+            <th class="right">国际价格</th>
+            <th class="right">日变动</th>
+            <th class="right">7日变动</th>
+            <th class="right">1月变动</th>
+          </tr>
+        </thead>
+        <tbody id="energyBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- China-US Spread -->
+  <div class="card">
+    <div class="card-title">
+      <span>🔁 中美价差 China-US Price Spread</span>
+      <span class="badge">溢价/折价</span>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="spread-table" id="spreadTable">
+        <thead>
+          <tr><th>品种</th><th>国际折算价</th><th>国内价格</th><th>价差%</th></tr>
+        </thead>
+        <tbody id="spreadBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Indicators -->
+  <div class="card">
+    <div class="card-title">
+      <span>📈 联动指标 Indicators</span>
+      <span class="badge">比率/指数</span>
+    </div>
+    <div class="rate-grid" id="indicatorsGrid"></div>
+  </div>
+
+  <!-- Alerts -->
+  <div class="card" id="alertsCard">
+    <div class="card-title">
+      <span>⚠ 变动预警 Alerts</span>
+      <span class="badge" id="alertCountBadge">0</span>
+    </div>
+    <ul class="alerts-list" id="alertsList">
+      <li style="color:var(--text3)">暂无预警</li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    <span>数据来源：COMEX/NYMEX (via Yahoo Finance) · 东方财富 (Eastmoney) · Frankfurter API</span>
+    <span style="margin:0 8px">·</span>
+    <span>点击任一数据点查看历史走势</span>
+    <br>
+    <span>⚠ 数据仅供参考，不构成投资建议</span>
+  </div>
+</div>
+
+<!-- Chart Modal -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="modalTitle">—</h2>
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="range-selector" id="rangeSelector">
+        <button class="range-btn" data-months="1">1月</button>
+        <button class="range-btn active" data-months="3">3月</button>
+        <button class="range-btn" data-months="6">6月</button>
+        <button class="range-btn" data-months="12">12月</button>
+      </div>
+      <div class="modal-stats" id="modalStats"></div>
+      <div class="chart-container">
+        <canvas id="historyChart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Global state ──
+let snapshot = null;
+let historyData = null;
+let chartInstance = null;
+let chartMeta = null; // { source: 'global'|'domestic', id: string }
+
+// ── Config ──
+const GLOBAL_META = {
+  gold:      { name:'黄金', flag:'🥇', unit:'USD/oz', cat:'precious', domId:'au' },
+  silver:    { name:'白银', flag:'🥈', unit:'USD/oz', cat:'precious', domId:'ag' },
+  platinum:  { name:'铂金', flag:'🔘', unit:'USD/oz', cat:'precious', domId:null },
+  palladium: { name:'钯金', flag:'🔘', unit:'USD/oz', cat:'precious', domId:null },
+  copper:    { name:'铜',   flag:'🟤', unit:'USD/lb', cat:'industrial', domId:'cu' },
+  aluminum:  { name:'铝',   flag:'⬜', unit:'USD/tonne', cat:'industrial', domId:'al' },
+  zinc:      { name:'锌',   flag:'🔵', unit:'—', cat:'industrial', domId:'zn' },
+  nickel:    { name:'镍',   flag:'🟢', unit:'—', cat:'industrial', domId:'ni' },
+  lead:      { name:'铅',   flag:'⚫', unit:'—', cat:'industrial', domId:'pb' },
+  tin:       { name:'锡',   flag:'🟡', unit:'—', cat:'industrial', domId:'sn' },
+  wti:       { name:'WTI原油', flag:'🛢️', unit:'USD/bbl', cat:'energy', domId:null },
+  brent:     { name:'布伦特', flag:'🛢️', unit:'USD/bbl', cat:'energy', domId:null },
+  natgas:    { name:'天然气', flag:'🔥', unit:'USD/MMBtu', cat:'energy', domId:null },
+};
+const DOMESTIC_META = {
+  au: { name:'沪金',     flag:'🥇', unit:'元/克', cat:'precious', globalId:'gold' },
+  ag: { name:'沪银',     flag:'🥈', unit:'元/千克', cat:'precious', globalId:'silver' },
+  cu: { name:'沪铜',     flag:'🟤', unit:'元/吨', cat:'industrial', globalId:'copper' },
+  al: { name:'沪铝',     flag:'⬜', unit:'元/吨', cat:'industrial', globalId:'aluminum' },
+  zn: { name:'沪锌',     flag:'🔵', unit:'元/吨', cat:'industrial', globalId:'zinc' },
+  ni: { name:'沪镍',     flag:'🟢', unit:'元/吨', cat:'industrial', globalId:'nickel' },
+  pb: { name:'沪铅',     flag:'⚫', unit:'元/吨', cat:'industrial', globalId:'lead' },
+  sn: { name:'沪锡',     flag:'🟡', unit:'元/吨', cat:'industrial', globalId:'tin' },
+  rb: { name:'螺纹钢',   flag:'🔩', unit:'元/吨', cat:'ferrous', globalId:null },
+  hc: { name:'热卷',     flag:'📐', unit:'元/吨', cat:'ferrous', globalId:null },
+  i:  { name:'铁矿石',   flag:'⛏️', unit:'元/吨', cat:'ferrous', globalId:null },
+  lc: { name:'碳酸锂',   flag:'🔋', unit:'元/吨', cat:'new_energy', globalId:null },
+};
+
+const CATEGORY_ORDER = {
+  precious:    ['gold','silver','platinum','palladium'],
+  industrial:  ['copper','aluminum','zinc','nickel','lead','tin'],
+  ferrous:     ['rb','hc','i','lc'],
+  energy:      ['wti','brent','natgas'],
+};
+
+// ── Init ──
+async function init() {
+  try {
+    const [sr, hr] = await Promise.all([
+      fetch('data/snapshot.json'),
+      fetch('data/history.json')
+    ]);
+    snapshot = await sr.json();
+    historyData = await hr.json();
+  } catch(e) {
+    console.error(e);
+    return;
+  }
+  renderHeader();
+  renderTable('precious', CATEGORY_ORDER.precious);
+  renderTable('industrial', CATEGORY_ORDER.industrial);
+  renderFerrous();
+  renderEnergy();
+  renderSpread();
+  renderIndicators();
+  renderAlerts();
+  setupRangeSelector();
+}
+
+function renderHeader() {
+  const updated = snapshot.meta?.updated;
+  document.getElementById('updateTime').textContent = updated
+    ? '更新于 ' + new Date(updated).toLocaleString('zh-CN')
+    : '无数据';
+  document.getElementById('preciousDate').textContent = snapshot.commodities?.date || '—';
+  document.getElementById('industrialDate').textContent = snapshot.commodities?.date || '—';
+  document.getElementById('ferrousDate').textContent = snapshot.commodities?.date || '—';
+  document.getElementById('energyDate').textContent = snapshot.commodities?.date || '—';
+
+  const alerts = snapshot.alerts || [];
+  if (alerts.length > 0) {
+    document.getElementById('alertBadge').style.display = 'inline-flex';
+    document.getElementById('alertCount').textContent = alerts.length;
+  }
+}
+
+function fmtChange(v) {
+  if (v === null || v === undefined) return '<span class="neutral">—</span>';
+  const cls = v > 0 ? 'up' : v < 0 ? 'down' : 'neutral';
+  const sign = v > 0 ? '+' : '';
+  return '<span class="change ' + cls + '">' + sign + v.toFixed(2) + '%</span>';
+}
+
+function fmtPrice(v, unit) {
+  if (v === null || v === undefined) return '—';
+  return v.toLocaleString('en-US', { minimumFractionDigits: unit.includes('oz') || unit.includes('bbl') ? 2 : 0, maximumFractionDigits: 2 });
+}
+
+// ── Render tables ──
+function renderTable(section, ids) {
+  const body = document.getElementById(section + 'Body');
+  const globalData = snapshot.commodities?.global || {};
+  const domesticData = snapshot.commodities?.domestic || {};
+  const ch1d = snapshot.commodities?.change_1d || {};
+  const ch7d = snapshot.commodities?.change_7d || {};
+  const ch1m = snapshot.commodities?.change_1m || {};
+
+  body.innerHTML = ids.map(id => {
+    const gPrice = globalData[id];
+    // find matching domestic id
+    const gMeta = GLOBAL_META[id] || null;
+    const domId = gMeta?.domId;
+    const dPrice = domId ? domesticData[domId] : null;
+    const gCh1d = ch1d.global?.[id];
+    const gCh7d = ch7d.global?.[id];
+    const gCh1m = ch1m.global?.[id];
+
+    const gName = gMeta ? (gMeta.flag||'') + ' ' + gMeta.name : id;
+    const gUnit = gMeta?.unit || '';
+    const dName = domId && DOMESTIC_META[domId] ? DOMESTIC_META[domId].name : '';
+    const dUnit = domId && DOMESTIC_META[domId] ? DOMESTIC_META[domId].unit : '';
+
+    const clickHandler = gPrice ? `openChart('global','${id}')` : (dPrice ? `openChart('domestic','${domId}')` : '');
+
+    return '<tr>'
+      + '<td onclick="' + clickHandler + '">' + gName + ' <span class="name-cn">' + (gMeta?.name||id) + '</span></td>'
+      + '<td class="right" onclick="' + (gPrice ? `openChart('global','${id}')` : '') + '"><span class="price">'
+      + (gPrice ? fmtPrice(gPrice, gUnit) : '—') + '</span> <span style="color:var(--text3);font-size:11px">' + gUnit + '</span></td>'
+      + '<td class="right" onclick="' + (dPrice ? `openChart('domestic','${domId}')` : '') + '"><span class="price">'
+      + (dPrice ? fmtPrice(dPrice, dUnit) : '—') + '</span> <span style="color:var(--text3);font-size:11px">' + dUnit + '</span></td>'
+      + '<td class="right">' + fmtChange(gCh1d) + '</td>'
+      + '<td class="right">' + fmtChange(gCh7d) + '</td>'
+      + '<td class="right">' + fmtChange(gCh1m) + '</td>'
+      + '</tr>';
+  }).join('');
+}
+
+function renderFerrous() {
+  const body = document.getElementById('ferrousBody');
+  const domesticData = snapshot.commodities?.domestic || {};
+  const ch1d = snapshot.commodities?.change_1d?.domestic || {};
+  const ch7d = snapshot.commodities?.change_7d?.domestic || {};
+  const ch1m = snapshot.commodities?.change_1m?.domestic || {};
+
+  const ids = CATEGORY_ORDER.ferrous;
+  body.innerHTML = ids.map(id => {
+    const dPrice = domesticData[id];
+    const meta = DOMESTIC_META[id];
+    return '<tr>'
+      + '<td onclick="' + (dPrice ? `openChart('domestic','${id}')` : '') + '">' + (meta?.flag||'') + ' ' + (meta?.name||id) + '</td>'
+      + '<td class="right" onclick="' + (dPrice ? `openChart('domestic','${id}')` : '') + '"><span class="price">'
+      + (dPrice ? fmtPrice(dPrice, meta?.unit||'') : '—') + '</span> <span style="color:var(--text3);font-size:11px">' + (meta?.unit||'') + '</span></td>'
+      + '<td class="right">' + fmtChange(ch1d[id]) + '</td>'
+      + '<td class="right">' + fmtChange(ch7d[id]) + '</td>'
+      + '<td class="right">' + fmtChange(ch1m[id]) + '</td>'
+      + '</tr>';
+  }).join('');
+}
+
+function renderEnergy() {
+  const body = document.getElementById('energyBody');
+  const globalData = snapshot.commodities?.global || {};
+  const ch1d = snapshot.commodities?.change_1d?.global || {};
+  const ch7d = snapshot.commodities?.change_7d?.global || {};
+  const ch1m = snapshot.commodities?.change_1m?.global || {};
+
+  const ids = CATEGORY_ORDER.energy;
+  body.innerHTML = ids.map(id => {
+    const gPrice = globalData[id];
+    const meta = GLOBAL_META[id];
+    const gUnit = meta?.unit || '';
+    return '<tr>'
+      + '<td onclick="' + (gPrice ? `openChart('global','${id}')` : '') + '">' + (meta?.flag||'') + ' ' + (meta?.name||id) + '</td>'
+      + '<td class="right" onclick="' + (gPrice ? `openChart('global','${id}')` : '') + '"><span class="price">'
+      + (gPrice ? fmtPrice(gPrice, gUnit) : '—') + '</span> <span style="color:var(--text3);font-size:11px">' + gUnit + '</span></td>'
+      + '<td class="right">' + fmtChange(ch1d[id]) + '</td>'
+      + '<td class="right">' + fmtChange(ch7d[id]) + '</td>'
+      + '<td class="right">' + fmtChange(ch1m[id]) + '</td>'
+      + '</tr>';
+  }).join('');
+}
+
+function renderSpread() {
+  const body = document.getElementById('spreadBody');
+  const spreads = snapshot.commodities?.spread || {};
+  if (Object.keys(spreads).length === 0) {
+    body.innerHTML = '<tr><td colspan="4" style="color:var(--text3);text-align:center">暂无价差数据</td></tr>';
+    return;
+  }
+  body.innerHTML = Object.entries(spreads).map(([id, sp]) => {
+    const meta = DOMESTIC_META[id];
+    const cls = sp.spread_pct > 0 ? 'premium' : sp.spread_pct < 0 ? 'discount' : '';
+    const sign = sp.spread_pct > 0 ? '+' : '';
+    return '<tr>'
+      + '<td>' + (meta?.flag||'') + ' ' + (meta?.name||id) + '</td>'
+      + '<td>' + sp.global_cny_equiv.toLocaleString() + ' ' + sp.unit + '</td>'
+      + '<td>' + sp.domestic.toLocaleString() + ' ' + sp.unit + '</td>'
+      + '<td class="' + cls + '">' + sign + sp.spread_pct.toFixed(2) + '%</td>'
+      + '</tr>';
+  }).join('');
+}
+
+function renderIndicators() {
+  const grid = document.getElementById('indicatorsGrid');
+  const ind = snapshot.indicators || {};
+
+  const items = [];
+
+  if (ind.dxy) {
+    items.push({ label: '美元指数 DXY', value: ind.dxy.toFixed(2), color: 'var(--text)' });
+  }
+  if (ind.usdcny) {
+    items.push({ label: 'USD/CNY', value: ind.usdcny.toFixed(4), color: 'var(--text)' });
+  }
+  if (ind.gold_silver_ratio) {
+    items.push({ label: '金银比 Gold/Silver', value: ind.gold_silver_ratio.toFixed(1), color: 'var(--gold)' });
+  }
+  if (ind.gold_copper_ratio) {
+    items.push({ label: '金铜比 Gold/Copper', value: ind.gold_copper_ratio.toFixed(1), color: 'var(--gold)' });
+  }
+
+  if (items.length === 0) {
+    grid.innerHTML = '<div style="color:var(--text3);padding:10px">数据不足</div>';
+    return;
+  }
+  grid.innerHTML = items.map(item =>
+    '<div class="rate-item">'
+    + '<div class="value" style="color:' + item.color + '">' + item.value + '</div>'
+    + '<div class="label">' + item.label + '</div>'
+    + '</div>'
+  ).join('');
+}
+
+function renderAlerts() {
+  const list = document.getElementById('alertsList');
+  const alerts = snapshot.alerts || [];
+  document.getElementById('alertCountBadge').textContent = alerts.length;
+  if (alerts.length === 0) {
+    list.innerHTML = '<li style="color:var(--text3)">✅ 暂无预警</li>';
+    return;
+  }
+  list.innerHTML = alerts.map(a =>
+    '<li><span class="' + (a.type === 'warning' ? 'icon-warn' : 'icon-info') + '">' + (a.type === 'warning' ? '⚠' : 'ℹ') + '</span> ' + a.message + '</li>'
+  ).join('');
+}
+
+// ── Chart modal ──
+function openChart(source, id) {
+  if (!historyData?.commodities) return;
+  chartMeta = { source, id };
+
+  const isGlobal = source === 'global';
+  const meta = isGlobal ? GLOBAL_META[id] : DOMESTIC_META[id];
+  const name = meta ? (meta.flag||'') + ' ' + meta.name : id;
+  const unit = meta?.unit || '';
+
+  document.getElementById('modalTitle').textContent = name + ' — 历史走势 (' + unit + ')';
+
+  // Build data from history
+  const dates = Object.keys(historyData.commodities).sort();
+  const chartData = dates.map(d => ({
+    date: new Date(d),
+    value: historyData.commodities[d]?.[source]?.[id]
+  })).filter(p => p.value !== null && p.value !== undefined);
+
+  if (chartData.length === 0) {
+    document.getElementById('modalStats').innerHTML = '<div style="color:var(--text3)">暂无历史数据</div>';
+    document.getElementById('modalOverlay').classList.add('active');
+    return;
+  }
+
+  // Store data globally for range switching
+  window._chartData = chartData;
+  window._chartUnit = unit;
+
+  renderChart(3); // default 3 months
+  document.getElementById('modalOverlay').classList.add('active');
+}
+
+function renderChart(months) {
+  const chartData = window._chartData || [];
+  const unit = window._chartUnit || '';
+
+  const cutoff = new Date();
+  cutoff.setMonth(cutoff.getMonth() - months);
+  const filtered = chartData.filter(p => p.date >= cutoff);
+
+  if (filtered.length === 0) {
+    document.getElementById('modalStats').innerHTML = '<div style="color:var(--text3)">暂无该时间段数据</div>';
+    return;
+  }
+
+  const values = filtered.map(p => p.value);
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+  const avg = values.reduce((a,b)=>a+b,0)/values.length;
+  const latest = values[values.length-1];
+  const first = values[0];
+  const changePct = first !== 0 ? ((latest-first)/first*100) : 0;
+
+  document.getElementById('modalStats').innerHTML =
+    '<div class="modal-stat"><div class="val" style="color:var(--accent)">' + fmtPrice(latest, unit) + '</div><div class="lbl">最新</div></div>'
+    + '<div class="modal-stat"><div class="val" style="color:var(--green)">' + fmtPrice(max, unit) + '</div><div class="lbl">最高</div></div>'
+    + '<div class="modal-stat"><div class="val" style="color:var(--red)">' + fmtPrice(min, unit) + '</div><div class="lbl">最低</div></div>'
+    + '<div class="modal-stat"><div class="val" style="color:var(--text)">' + fmtPrice(avg, unit) + '</div><div class="lbl">均值</div></div>'
+    + '<div class="modal-stat"><div class="val" style="color:' + (changePct>=0?'var(--green)':'var(--red)') + '">' + (changePct>=0?'+':'') + changePct.toFixed(2) + '%</div><div class="lbl">区间变动</div></div>';
+
+  const labels = filtered.map(p => p.date);
+  const data = filtered.map(p => p.value);
+
+  if (chartInstance) {
+    chartInstance.data.labels = labels;
+    chartInstance.data.datasets[0].data = data;
+    chartInstance.data.datasets[0].label = chartMeta?.id || '';
+    chartInstance.update();
+  } else {
+    const ctx = document.getElementById('historyChart').getContext('2d');
+    chartInstance = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [{ label: chartMeta?.id||'', data, borderColor:'#e8890c', backgroundColor:'rgba(232,137,12,0.08)', fill:true, tension:0.2, pointRadius:0, pointHitRadius:10, borderWidth:2 }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        interaction: { intersect:false, mode:'index' },
+        plugins: { legend: { display:false } },
+        scales: {
+          x: { type:'time', time:{ unit:months<=3?'week':'month', displayFormats:{month:'yyyy-MM',week:'MM-dd'} }, grid:{display:false}, ticks:{color:'#8e90a6',font:{size:11}} },
+          y: { grid:{color:'#f0f0f5'}, ticks:{color:'#8e90a6',font:{size:11},callback:v=>v.toLocaleString()} }
+        }
+      }
+    });
+  }
+}
+
+function setupRangeSelector() {
+  document.getElementById('rangeSelector').addEventListener('click', function(e) {
+    const btn = e.target.closest('.range-btn');
+    if (!btn) return;
+    document.querySelectorAll('.range-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    renderChart(parseInt(btn.dataset.months));
+  });
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('active');
+}
+function scrollToAlerts() {
+  document.getElementById('alertsCard').scrollIntoView({behavior:'smooth'});
+}
+document.addEventListener('keydown', e => { if (e.key==='Escape') closeModal(); });
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

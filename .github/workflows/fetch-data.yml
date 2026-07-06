@@ -1,0 +1,66 @@
+name: Fetch Commodities Data
+
+on:
+  schedule:
+    # UTC 1:00 → CST 9:00 (亚洲开盘后), UTC 9:00 → CST 17:00 (国内收盘),
+    # UTC 21:00 → CST 5:00+1 (美盘收盘后)
+    - cron: '0 1,9,21 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/fetch_data.py'
+      - '.github/workflows/fetch-data.yml'
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  fetch-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests yfinance
+
+      - name: Fetch data
+        run: python scripts/fetch_data.py
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "commodities-monitor-bot"
+          git config user.email "bot@commodities-monitor"
+          git add data/
+          if git diff --cached --quiet; then
+            echo "No data changes"
+          else
+            git commit -m "auto: update commodities data [$(date -u '+%Y-%m-%d %H:%M UTC')]"
+            git push
+          fi
+
+  deploy-pages:
+    needs: fetch-data
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
