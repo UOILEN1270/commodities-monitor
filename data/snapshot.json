@@ -2,14 +2,14 @@
   "commodities": {
     "date": "2026-07-06",
     "global": {
-      "gold": 4174.9,
-      "silver": 62.76,
-      "platinum": 1660.6,
-      "palladium": 1272.5,
-      "copper": 6.25,
+      "gold": 4175.9,
+      "silver": 62.78,
+      "platinum": 1663.4,
+      "palladium": 1292.5,
+      "copper": 6.26,
       "aluminum": 3265.0,
-      "wti": 67.88,
-      "brent": 71.11,
+      "wti": 67.95,
+      "brent": 71.17,
       "natgas": 3.21
     },
     "domestic": {
@@ -30,21 +30,21 @@
     },
     "spread": {
       "au": {
-        "global_cny_equiv": 910.24,
+        "global_cny_equiv": 910.46,
         "domestic": 911.56,
-        "spread_pct": 0.14,
+        "spread_pct": 0.12,
         "unit": "CNY/g"
       },
       "ag": {
-        "global_cny_equiv": 13683.37,
+        "global_cny_equiv": 13687.73,
         "domestic": 15250.0,
-        "spread_pct": 11.45,
+        "spread_pct": 11.41,
         "unit": "CNY/kg"
       },
       "cu": {
-        "global_cny_equiv": 93440.0,
+        "global_cny_equiv": 93590.0,
         "domestic": 102710.0,
-        "spread_pct": 9.92,
+        "spread_pct": 9.74,
         "unit": "CNY/tonne"
       },
       "al": {
@@ -59,14 +59,14 @@
     "change_1m": {}
   },
   "indicators": {
-    "dxy": 101.02,
+    "dxy": 101.01,
     "gold_silver_ratio": 66.52,
-    "gold_copper_ratio": 668.0,
+    "gold_copper_ratio": 667.1,
     "usdcny": 6.7814
   },
   "alerts": [],
   "meta": {
-    "updated": "2026-07-06T08:06:12.259818",
+    "updated": "2026-07-06T08:10:43.589799",
     "source": "Commodities Monitor (GH Actions)"
   }
 }
