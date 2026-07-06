@@ -2,13 +2,14 @@
   "commodities": {
     "date": "2026-07-06",
     "global": {
-      "silver": 62.65,
-      "platinum": 1657.7,
-      "palladium": 1286.0,
+      "gold": 4174.9,
+      "silver": 62.76,
+      "platinum": 1660.6,
+      "palladium": 1272.5,
       "copper": 6.25,
       "aluminum": 3265.0,
-      "wti": 68.15,
-      "brent": 71.44,
+      "wti": 67.88,
+      "brent": 71.11,
       "natgas": 3.21
     },
     "domestic": {
@@ -28,10 +29,16 @@
       "j": 1935.0
     },
     "spread": {
+      "au": {
+        "global_cny_equiv": 910.24,
+        "domestic": 911.56,
+        "spread_pct": 0.14,
+        "unit": "CNY/g"
+      },
       "ag": {
-        "global_cny_equiv": 13659.39,
+        "global_cny_equiv": 13683.37,
         "domestic": 15250.0,
-        "spread_pct": 11.64,
+        "spread_pct": 11.45,
         "unit": "CNY/kg"
       },
       "cu": {
@@ -53,11 +60,13 @@
   },
   "indicators": {
     "dxy": 101.02,
+    "gold_silver_ratio": 66.52,
+    "gold_copper_ratio": 668.0,
     "usdcny": 6.7814
   },
   "alerts": [],
   "meta": {
-    "updated": "2026-07-06T15:58:11.126695",
+    "updated": "2026-07-06T08:06:12.259818",
     "source": "Commodities Monitor (GH Actions)"
   }
 }
