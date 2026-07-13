@@ -2,14 +2,15 @@
   "commodities": {
     "date": "2026-07-13",
     "global": {
-      "gold": 4063.0,
-      "silver": 58.46,
-      "platinum": 1603.4,
-      "palladium": 1251.0,
-      "copper": 6.2,
-      "wti": 74.33,
-      "brent": 79.1,
-      "natgas": 2.9
+      "gold": 4071.0,
+      "silver": 59.04,
+      "platinum": 1635.3,
+      "palladium": 1268.5,
+      "copper": 6.3,
+      "wti": 73.89,
+      "brent": 78.59,
+      "natgas": 2.89,
+      "aluminum": 3306.5
     },
     "domestic": {
       "au": 895.0,
@@ -29,34 +30,41 @@
     },
     "spread": {
       "au": {
-        "global_cny_equiv": 884.94,
+        "global_cny_equiv": 886.68,
         "domestic": 895.0,
-        "spread_pct": 1.14,
+        "spread_pct": 0.94,
         "unit": "CNY/g"
       },
       "ag": {
-        "global_cny_equiv": 12732.88,
+        "global_cny_equiv": 12859.21,
         "domestic": 14537.0,
-        "spread_pct": 14.17,
+        "spread_pct": 13.05,
         "unit": "CNY/kg"
       },
       "cu": {
-        "global_cny_equiv": 92598.0,
+        "global_cny_equiv": 94092.0,
         "domestic": 103500.0,
-        "spread_pct": 11.77,
+        "spread_pct": 10.0,
+        "unit": "CNY/tonne"
+      },
+      "al": {
+        "global_cny_equiv": 22399.88,
+        "domestic": 22950.0,
+        "spread_pct": 2.46,
         "unit": "CNY/tonne"
       }
     },
     "change_1d": {
       "global": {
-        "gold": -1.23,
-        "silver": -2.84,
-        "platinum": -1.57,
-        "palladium": -1.98,
-        "copper": -1.27,
-        "wti": 4.09,
-        "brent": 4.07,
-        "natgas": -1.36
+        "gold": -1.04,
+        "silver": -1.88,
+        "platinum": 0.39,
+        "palladium": -0.61,
+        "copper": 0.32,
+        "wti": 3.47,
+        "brent": 3.39,
+        "natgas": -1.7,
+        "aluminum": 0.09
       },
       "domestic": {
         "au": 0.0,
@@ -77,14 +85,15 @@
     },
     "change_7d": {
       "global": {
-        "gold": -2.97,
-        "silver": -6.93,
-        "platinum": -2.94,
-        "palladium": -1.69,
-        "copper": -0.32,
-        "wti": 8.07,
-        "brent": 9.66,
-        "natgas": -10.49
+        "gold": -2.78,
+        "silver": -6.0,
+        "platinum": -1.0,
+        "palladium": -0.31,
+        "copper": 1.29,
+        "wti": 7.43,
+        "brent": 8.96,
+        "natgas": -10.8,
+        "aluminum": 1.27
       },
       "domestic": {
         "au": -1.21,
@@ -105,14 +114,15 @@
     },
     "change_1m": {
       "global": {
-        "gold": -3.61,
-        "silver": -13.85,
-        "platinum": -6.19,
-        "palladium": -1.97,
-        "copper": -3.58,
-        "wti": -12.43,
-        "brent": -9.42,
-        "natgas": -7.05
+        "gold": -3.42,
+        "silver": -13.0,
+        "platinum": -4.32,
+        "palladium": -0.6,
+        "copper": -2.02,
+        "wti": -12.95,
+        "brent": -10.01,
+        "natgas": -7.37,
+        "aluminum": -14.31
       },
       "domestic": {
         "au": -1.82,
@@ -133,31 +143,27 @@
     }
   },
   "indicators": {
-    "dxy": 101.12,
-    "gold_silver_ratio": 69.5,
-    "gold_copper_ratio": 655.3,
+    "dxy": 100.92,
+    "gold_silver_ratio": 68.95,
+    "gold_copper_ratio": 646.2,
     "usdcny": 6.7745
   },
   "alerts": [
     {
       "type": "info",
-      "message": "白银(国际) 单日变动 -2.84%"
-    },
-    {
-      "type": "info",
-      "message": "铂金(国际) 单日变动 -1.57%"
-    },
-    {
-      "type": "info",
-      "message": "钯金(国际) 单日变动 -1.98%"
+      "message": "白银(国际) 单日变动 -1.88%"
     },
     {
       "type": "warning",
-      "message": "WTI原油(国际) 单日变动 +4.09%"
+      "message": "WTI原油(国际) 单日变动 +3.47%"
     },
     {
       "type": "warning",
-      "message": "布伦特(国际) 单日变动 +4.07%"
+      "message": "布伦特(国际) 单日变动 +3.39%"
+    },
+    {
+      "type": "info",
+      "message": "天然气(国际) 单日变动 -1.70%"
     },
     {
       "type": "info",
@@ -165,7 +171,7 @@
     }
   ],
   "meta": {
-    "updated": "2026-07-13T04:23:34.161704",
+    "updated": "2026-07-13T11:48:50.406120",
     "source": "Commodities Monitor (GH Actions)"
   }
 }
