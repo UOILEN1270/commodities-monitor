@@ -7902,15 +7902,15 @@
     },
     "2026-07-18": {
       "global": {
-        "gold": 4023.0,
-        "silver": 56.22,
-        "platinum": 1603.5,
-        "palladium": 1250.0,
-        "copper": 6.27,
-        "aluminum": 3452.75,
-        "wti": 81.77,
-        "brent": 88.09,
-        "natgas": 2.92
+        "gold": 4012.7,
+        "silver": 56.04,
+        "platinum": 1605.8,
+        "palladium": 1244.0,
+        "copper": 6.22,
+        "aluminum": 3529.0,
+        "wti": 82.49,
+        "brent": 88.1,
+        "natgas": 2.91
       },
       "domestic": {
         "au": 871.0,
