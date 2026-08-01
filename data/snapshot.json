@@ -12,8 +12,48 @@
       "brent": 90.12,
       "natgas": 2.75
     },
-    "domestic": {},
-    "spread": {},
+    "domestic": {
+      "au": 882.06,
+      "ag": 14108.0,
+      "cu": 105460.0,
+      "al": 23600.0,
+      "zn": 25010.0,
+      "ni": 131680.0,
+      "pb": 15550.0,
+      "sn": 424980.0,
+      "rb": 3010.0,
+      "hc": 3221.0,
+      "i": 717.0,
+      "lc": 143880.0,
+      "jm": 1182.0,
+      "j": 1767.0
+    },
+    "spread": {
+      "au": {
+        "global_cny_equiv": 878.89,
+        "domestic": 882.06,
+        "spread_pct": 0.36,
+        "unit": "CNY/g"
+      },
+      "ag": {
+        "global_cny_equiv": 12500.44,
+        "domestic": 14108.0,
+        "spread_pct": 12.86,
+        "unit": "CNY/kg"
+      },
+      "cu": {
+        "global_cny_equiv": 95853.0,
+        "domestic": 105460.0,
+        "spread_pct": 10.02,
+        "unit": "CNY/tonne"
+      },
+      "al": {
+        "global_cny_equiv": 22513.9,
+        "domestic": 23600.0,
+        "spread_pct": 4.82,
+        "unit": "CNY/tonne"
+      }
+    },
     "change_1d": {
       "global": {
         "gold": -1.21,
@@ -26,7 +66,22 @@
         "brent": 0.0,
         "natgas": -1.43
       },
-      "domestic": {}
+      "domestic": {
+        "au": 0.0,
+        "ag": 0.0,
+        "cu": 0.0,
+        "al": 0.0,
+        "zn": 0.0,
+        "ni": 0.0,
+        "pb": 0.0,
+        "sn": 0.0,
+        "rb": 0.0,
+        "hc": 0.0,
+        "i": 0.0,
+        "lc": 0.0,
+        "jm": 0.0,
+        "j": 0.0
+      }
     },
     "change_7d": {
       "global": {
@@ -40,7 +95,22 @@
         "brent": -6.88,
         "natgas": -4.18
       },
-      "domestic": {}
+      "domestic": {
+        "au": -0.56,
+        "ag": -1.31,
+        "cu": 0.82,
+        "al": 1.75,
+        "zn": 0.91,
+        "ni": -1.26,
+        "pb": -1.14,
+        "sn": 2.4,
+        "rb": -2.15,
+        "hc": -2.16,
+        "i": -3.76,
+        "lc": -0.22,
+        "jm": -7.66,
+        "j": -4.38
+      }
     },
     "change_1m": {
       "global": {
@@ -54,7 +124,22 @@
         "brent": 25.52,
         "natgas": -14.06
       },
-      "domestic": {}
+      "domestic": {
+        "au": -0.97,
+        "ag": -3.7,
+        "cu": 3.44,
+        "al": 5.36,
+        "zn": 3.65,
+        "ni": 5.18,
+        "pb": -1.36,
+        "sn": 8.07,
+        "rb": -1.86,
+        "hc": -1.89,
+        "i": -3.11,
+        "lc": -12.29,
+        "jm": -6.75,
+        "j": -7.24
+      }
     }
   },
   "indicators": {
@@ -70,7 +155,7 @@
     }
   ],
   "meta": {
-    "updated": "2026-08-01T04:17:33.269239",
+    "updated": "2026-08-01T10:25:03.253414",
     "source": "Commodities Monitor (GH Actions)"
   }
 }
