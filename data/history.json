@@ -8366,13 +8366,15 @@
     },
     "2026-08-03": {
       "global": {
-        "gold": 4120.8,
-        "silver": 58.44,
-        "platinum": 1658.5,
-        "palladium": 1294.0,
-        "copper": 6.53,
-        "wti": 79.82,
-        "natgas": 2.76
+        "gold": 4120.3,
+        "silver": 58.2,
+        "platinum": 1652.0,
+        "palladium": 1276.0,
+        "copper": 6.51,
+        "wti": 79.07,
+        "natgas": 2.77,
+        "aluminum": 3409.25,
+        "brent": 82.91
       },
       "domestic": {
         "au": 882.06,
