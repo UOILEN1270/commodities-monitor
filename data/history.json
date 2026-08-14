@@ -8685,15 +8685,15 @@
     },
     "2026-08-14": {
       "global": {
-        "gold": 4376.8,
-        "silver": 64.12,
-        "platinum": 1717.1,
-        "palladium": 1306.5,
-        "copper": 6.57,
-        "aluminum": 3414.75,
-        "wti": 81.25,
-        "brent": 86.98,
-        "natgas": 2.74
+        "gold": 4408.9,
+        "silver": 64.86,
+        "platinum": 1737.9,
+        "palladium": 1317.0,
+        "copper": 6.58,
+        "aluminum": 3435.75,
+        "wti": 82.4,
+        "brent": 87.78,
+        "natgas": 2.75
       },
       "domestic": {
         "au": 955.82,
@@ -9582,7 +9582,7 @@
       "dxy": 99.96
     },
     "2026-08-14": {
-      "dxy": 99.9
+      "dxy": 99.74
     }
   },
   "meta": {
