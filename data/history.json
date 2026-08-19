@@ -8831,13 +8831,13 @@
     "2026-08-19": {
       "global": {
         "gold": 4410.2,
-        "silver": 63.27,
-        "platinum": 1726.1,
-        "palladium": 1289.0,
-        "copper": 6.47,
-        "aluminum": 3343.0,
-        "wti": 85.04,
-        "brent": 91.84,
+        "silver": 63.17,
+        "platinum": 1737.4,
+        "palladium": 1292.0,
+        "copper": 6.42,
+        "aluminum": 3352.0,
+        "wti": 85.36,
+        "brent": 92.33,
         "natgas": 2.79
       },
       "domestic": {
@@ -9742,7 +9742,7 @@
       "dxy": 99.65
     },
     "2026-08-19": {
-      "dxy": 99.63
+      "dxy": 99.45
     }
   },
   "meta": {
