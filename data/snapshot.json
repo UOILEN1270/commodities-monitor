@@ -143,14 +143,14 @@
     }
   },
   "indicators": {
-    "dxy": 99.16,
+    "dxy": 99.7,
     "gold_silver_ratio": NaN,
     "gold_copper_ratio": NaN,
     "usdcny": 6.7209
   },
   "alerts": [],
   "meta": {
-    "updated": "2026-08-29T14:03:33.965311",
+    "updated": "2026-08-29T22:52:48.144544",
     "source": "Commodities Monitor (GH Actions)"
   }
 }
