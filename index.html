@@ -107,6 +107,11 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); font
     </div>
   </div>
 
+  <!-- Data load failure banner (visible only when data fetch fails after retries) -->
+  <div id="dataError" style="display:none;background:var(--red-bg);color:var(--red);padding:10px 16px;border-radius:10px;margin-bottom:16px;font-size:13px;font-weight:600">
+    ⚠ 数据加载失败（可能是网络连接被重置）—— 请 <a href="javascript:location.reload()" style="color:var(--red);text-decoration:underline">刷新重试</a>，或稍后再来。
+  </div>
+
   <!-- Precious Metals -->
   <div class="card">
     <div class="card-title">
@@ -312,16 +317,42 @@ const CATEGORY_ORDER = {
 };
 
 // ── Init ──
+// Fetch with retries: github.io is intermittently TLS-reset on some networks,
+// a single failed fetch used to silently blank the whole page.
+async function fetchJson(url, retries = 3, baseDelayMs = 800) {
+  let lastErr;
+  for (let i = 0; i < retries; i++) {
+    try {
+      const res = await fetch(url, { cache: 'no-store' });
+      if (!res.ok) throw new Error('HTTP ' + res.status + ' for ' + url);
+      return await res.json();
+    } catch (e) {
+      lastErr = e;
+      if (i < retries - 1) {
+        console.warn('fetch ' + url + ' failed (try ' + (i + 1) + '/' + retries + '):', e.message);
+        await new Promise(r => setTimeout(r, baseDelayMs * (i + 1)));
+      }
+    }
+  }
+  throw lastErr;
+}
+
+function showDataError(e) {
+  console.error('数据加载失败:', e);
+  const banner = document.getElementById('dataError');
+  if (banner) banner.style.display = 'block';
+  const t = document.getElementById('updateTime');
+  if (t) t.textContent = '⚠ 数据加载失败';
+}
+
 async function init() {
   try {
-    const [sr, hr] = await Promise.all([
-      fetch('data/snapshot.json'),
-      fetch('data/history.json')
+    [snapshot, historyData] = await Promise.all([
+      fetchJson('data/snapshot.json'),
+      fetchJson('data/history.json')
     ]);
-    snapshot = await sr.json();
-    historyData = await hr.json();
   } catch(e) {
-    console.error(e);
+    showDataError(e);
     return;
   }
   renderHeader();

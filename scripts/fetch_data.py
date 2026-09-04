@@ -12,6 +12,7 @@ Produces:
 
 import json
 import logging
+import math
 import os
 import sys
 import time
@@ -107,6 +108,9 @@ def fetch_global_prices() -> dict:
                 log.warning(f"  ⚠ {ticker} ({name_cn}) no data")
                 continue
             price = float(hist["Close"].iloc[-1])
+            if not math.isfinite(price):
+                log.warning(f"  ⚠ {ticker} ({name_cn}) non-finite price ({price}), skipping")
+                continue
             results[cid] = round(price, 2)
             log.info(f"  ✓ {name_cn} ({ticker}): {price}")
         except Exception as e:
@@ -173,6 +177,9 @@ def fetch_domestic_prices() -> dict:
                 continue
             # field[2] = latest price
             price = float(fields[2])
+            if not math.isfinite(price):
+                log.warning(f"  ⚠ {name_cn} ({sina_code}) non-finite price ({price}), skipping")
+                continue
             results[cid] = round(price, 2)
             log.info(f"  ✓ {name_cn} ({sina_code}): {price}")
         except Exception as e:
@@ -192,6 +199,9 @@ def fetch_dxy() -> Optional[float]:
         if hist.empty:
             return None
         price = float(hist["Close"].iloc[-1])
+        if not math.isfinite(price):
+            log.warning(f"  ⚠ DXY non-finite price ({price})")
+            return None
         log.info(f"  ✓ DXY: {price}")
         return round(price, 2)
     except Exception as e:
@@ -214,14 +224,31 @@ def load_history() -> dict:
     }
 
 
+def _sanitize_nonfinite(obj):
+    """Recursively replace non-finite floats (NaN/Inf) with None so output is always valid strict JSON.
+
+    Belt-and-braces behind the per-fetcher isfinite() guards: if a bad value ever
+    slips through, it lands as JSON null (renders as a gap / '—') instead of
+    producing invalid JSON that bricks JSON.parse in the browser.
+    """
+    if isinstance(obj, float):
+        return None if not math.isfinite(obj) else obj
+    if isinstance(obj, dict):
+        return {k: _sanitize_nonfinite(v) for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [_sanitize_nonfinite(v) for v in obj]
+    return obj
+
+
 def save_history(history: dict):
     with open(HISTORY_PATH, "w", encoding="utf-8") as f:
-        json.dump(history, f, indent=2, ensure_ascii=False)
+        # allow_nan=False = tripwire: raises loudly instead of writing NaN
+        json.dump(_sanitize_nonfinite(history), f, indent=2, ensure_ascii=False, allow_nan=False)
 
 
 def save_snapshot(snapshot: dict):
     with open(SNAPSHOT_PATH, "w", encoding="utf-8") as f:
-        json.dump(snapshot, f, indent=2, ensure_ascii=False)
+        json.dump(_sanitize_nonfinite(snapshot), f, indent=2, ensure_ascii=False, allow_nan=False)
 
 
 def compute_changes(history: dict, today: str) -> dict:

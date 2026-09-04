@@ -9118,35 +9118,6 @@
         "j": 2160.5
       }
     },
-    "2026-08-29": {
-      "global": {
-        "gold": NaN,
-        "silver": NaN,
-        "platinum": NaN,
-        "palladium": NaN,
-        "copper": NaN,
-        "aluminum": NaN,
-        "wti": NaN,
-        "brent": NaN,
-        "natgas": NaN
-      },
-      "domestic": {
-        "au": 997.0,
-        "ag": 17284.0,
-        "cu": 109200.0,
-        "al": 23935.0,
-        "zn": 26240.0,
-        "ni": 129000.0,
-        "pb": 16205.0,
-        "sn": 423850.0,
-        "rb": 3160.0,
-        "hc": 3373.0,
-        "i": 723.0,
-        "lc": 153980.0,
-        "jm": 1629.0,
-        "j": 2160.5
-      }
-    },
     "2026-08-30": {
       "global": {
         "gold": 4509.3,
