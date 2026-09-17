@@ -2,15 +2,15 @@
   "commodities": {
     "date": "2026-09-17",
     "global": {
-      "gold": 4399.2,
-      "silver": 65.82,
-      "platinum": 1786.7,
-      "palladium": 1307.0,
-      "copper": 6.63,
-      "aluminum": 3446.5,
-      "wti": 101.08,
-      "brent": 103.44,
-      "natgas": 2.88
+      "gold": 4381.6,
+      "silver": 65.8,
+      "platinum": 1776.4,
+      "palladium": 1291.5,
+      "copper": 6.62,
+      "aluminum": 3451.5,
+      "wti": 101.15,
+      "brent": 104.08,
+      "natgas": 2.87
     },
     "domestic": {
       "au": 948.2,
@@ -30,41 +30,41 @@
     },
     "spread": {
       "au": {
-        "global_cny_equiv": 948.64,
+        "global_cny_equiv": 944.9,
         "domestic": 948.2,
-        "spread_pct": -0.05,
+        "spread_pct": 0.35,
         "unit": "CNY/g"
       },
       "ag": {
-        "global_cny_equiv": 14193.3,
+        "global_cny_equiv": 14189.83,
         "domestic": 15970.0,
-        "spread_pct": 12.52,
+        "spread_pct": 12.55,
         "unit": "CNY/kg"
       },
       "cu": {
-        "global_cny_equiv": 98035.0,
+        "global_cny_equiv": 97893.0,
         "domestic": 109200.0,
-        "spread_pct": 11.39,
+        "spread_pct": 11.55,
         "unit": "CNY/tonne"
       },
       "al": {
-        "global_cny_equiv": 23116.02,
+        "global_cny_equiv": 23150.94,
         "domestic": 24260.0,
-        "spread_pct": 4.95,
+        "spread_pct": 4.79,
         "unit": "CNY/tonne"
       }
     },
     "change_1d": {
       "global": {
-        "gold": 2.25,
-        "silver": 3.87,
-        "platinum": 1.3,
-        "palladium": 1.32,
-        "copper": 2.95,
-        "aluminum": 1.18,
-        "wti": -0.91,
-        "brent": -2.05,
-        "natgas": -0.35
+        "gold": 1.84,
+        "silver": 3.83,
+        "platinum": 0.71,
+        "palladium": 0.12,
+        "copper": 2.8,
+        "aluminum": 1.33,
+        "wti": -0.84,
+        "brent": -1.45,
+        "natgas": -0.69
       },
       "domestic": {
         "au": 0.57,
@@ -85,15 +85,15 @@
     },
     "change_7d": {
       "global": {
-        "gold": 0.98,
-        "silver": 2.97,
-        "platinum": 0.49,
-        "palladium": 1.28,
-        "copper": 1.69,
-        "aluminum": -0.22,
-        "wti": -2.76,
-        "brent": -5.22,
-        "natgas": 1.41
+        "gold": 0.58,
+        "silver": 2.94,
+        "platinum": -0.09,
+        "palladium": 0.08,
+        "copper": 1.53,
+        "aluminum": -0.07,
+        "wti": -2.69,
+        "brent": -4.64,
+        "natgas": 1.06
       },
       "domestic": {
         "au": 0.66,
@@ -114,15 +114,15 @@
     },
     "change_1m": {
       "global": {
-        "gold": 0.22,
-        "silver": 3.78,
-        "platinum": 3.88,
-        "palladium": 1.4,
-        "copper": 2.63,
-        "aluminum": 2.94,
-        "wti": 19.73,
-        "brent": 13.33,
-        "natgas": 3.23
+        "gold": -0.18,
+        "silver": 3.75,
+        "platinum": 3.29,
+        "palladium": 0.19,
+        "copper": 2.48,
+        "aluminum": 3.09,
+        "wti": 19.82,
+        "brent": 14.04,
+        "natgas": 2.87
       },
       "domestic": {
         "au": -0.87,
@@ -143,27 +143,23 @@
     }
   },
   "indicators": {
-    "dxy": 100.14,
-    "gold_silver_ratio": 66.84,
-    "gold_copper_ratio": 663.5,
-    "usdcny": 6.7071
+    "dxy": 100.24,
+    "gold_silver_ratio": 66.59,
+    "gold_copper_ratio": 661.9,
+    "usdcny": 6.7075
   },
   "alerts": [
     {
       "type": "info",
-      "message": "黄金(国际) 单日变动 +2.25%"
+      "message": "黄金(国际) 单日变动 +1.84%"
     },
     {
       "type": "warning",
-      "message": "白银(国际) 单日变动 +3.87%"
+      "message": "白银(国际) 单日变动 +3.83%"
     },
     {
       "type": "info",
-      "message": "铜(国际) 单日变动 +2.95%"
-    },
-    {
-      "type": "info",
-      "message": "布伦特(国际) 单日变动 -2.05%"
+      "message": "铜(国际) 单日变动 +2.80%"
     },
     {
       "type": "info",
@@ -183,7 +179,7 @@
     }
   ],
   "meta": {
-    "updated": "2026-09-17T13:51:51.576240",
+    "updated": "2026-09-17T23:11:56.022136",
     "source": "Commodities Monitor (GH Actions)"
   }
 }
