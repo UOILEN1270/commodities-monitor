@@ -9932,15 +9932,15 @@
     },
     "2026-09-27": {
       "global": {
-        "gold": 4321.2,
-        "silver": 64.8,
-        "platinum": 1797.7,
-        "palladium": 1276.0,
-        "copper": 6.77,
-        "aluminum": 3465.0,
-        "wti": 92.41,
-        "brent": 97.44,
-        "natgas": 3.22
+        "gold": 4298.9,
+        "silver": 64.24,
+        "platinum": 1779.4,
+        "palladium": 1264.0,
+        "copper": 6.74,
+        "aluminum": 3475.0,
+        "wti": 93.54,
+        "brent": 98.62,
+        "natgas": 3.11
       },
       "domestic": {
         "au": 934.82,
