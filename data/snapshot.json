@@ -2,15 +2,15 @@
   "commodities": {
     "date": "2026-09-29",
     "global": {
-      "gold": 4200.7,
-      "silver": 61.58,
-      "platinum": 1705.9,
-      "palladium": 1215.5,
-      "copper": 6.65,
-      "aluminum": 3343.5,
-      "wti": 91.47,
-      "brent": 96.97,
-      "natgas": 3.04
+      "gold": 4217.2,
+      "silver": 61.93,
+      "platinum": 1731.2,
+      "palladium": 1235.0,
+      "copper": 6.66,
+      "aluminum": 3353.5,
+      "wti": 89.16,
+      "brent": 95.93,
+      "natgas": 3.02
     },
     "domestic": {
       "au": 901.5,
@@ -30,41 +30,41 @@
     },
     "spread": {
       "au": {
-        "global_cny_equiv": 905.33,
+        "global_cny_equiv": 908.89,
         "domestic": 901.5,
-        "spread_pct": -0.42,
+        "spread_pct": -0.81,
         "unit": "CNY/g"
       },
       "ag": {
-        "global_cny_equiv": 13271.67,
+        "global_cny_equiv": 13347.1,
         "domestic": 14846.0,
-        "spread_pct": 11.86,
+        "spread_pct": 11.23,
         "unit": "CNY/kg"
       },
       "cu": {
-        "global_cny_equiv": 98277.0,
+        "global_cny_equiv": 98425.0,
         "domestic": 109280.0,
-        "spread_pct": 11.2,
+        "spread_pct": 11.03,
         "unit": "CNY/tonne"
       },
       "al": {
-        "global_cny_equiv": 22412.82,
+        "global_cny_equiv": 22479.85,
         "domestic": 23895.0,
-        "spread_pct": 6.61,
+        "spread_pct": 6.3,
         "unit": "CNY/tonne"
       }
     },
     "change_1d": {
       "global": {
-        "gold": 0.91,
-        "silver": 0.03,
-        "platinum": -2.03,
-        "palladium": -0.45,
-        "copper": 0.3,
-        "aluminum": -1.39,
-        "wti": -1.7,
-        "brent": -1.09,
-        "natgas": -2.56
+        "gold": 1.3,
+        "silver": 0.6,
+        "platinum": -0.58,
+        "palladium": 1.15,
+        "copper": 0.45,
+        "aluminum": -1.09,
+        "wti": -4.18,
+        "brent": -2.15,
+        "natgas": -3.21
       },
       "domestic": {
         "au": 0.05,
@@ -85,15 +85,15 @@
     },
     "change_7d": {
       "global": {
-        "gold": -4.57,
-        "silver": -9.25,
-        "platinum": -7.33,
-        "palladium": -7.99,
-        "copper": -3.76,
-        "aluminum": -4.76,
-        "wti": 2.03,
-        "brent": -1.57,
-        "natgas": -4.1
+        "gold": -4.19,
+        "silver": -8.74,
+        "platinum": -5.96,
+        "palladium": -6.51,
+        "copper": -3.62,
+        "aluminum": -4.47,
+        "wti": -0.55,
+        "brent": -2.63,
+        "natgas": -4.73
       },
       "domestic": {
         "au": -4.01,
@@ -114,15 +114,15 @@
     },
     "change_1m": {
       "global": {
-        "gold": -6.84,
-        "silver": -8.28,
-        "platinum": -7.45,
-        "palladium": -16.69,
-        "copper": 0.15,
-        "aluminum": -1.86,
-        "wti": 7.73,
-        "brent": 8.0,
-        "natgas": 5.92
+        "gold": -6.48,
+        "silver": -7.76,
+        "platinum": -6.08,
+        "palladium": -15.35,
+        "copper": 0.3,
+        "aluminum": -1.56,
+        "wti": 5.01,
+        "brent": 6.84,
+        "natgas": 5.23
       },
       "domestic": {
         "au": -9.58,
@@ -143,23 +143,23 @@
     }
   },
   "indicators": {
-    "dxy": 101.45,
-    "gold_silver_ratio": 68.22,
-    "gold_copper_ratio": 631.7,
+    "dxy": 101.42,
+    "gold_silver_ratio": 68.1,
+    "gold_copper_ratio": 633.2,
     "usdcny": 6.7034
   },
   "alerts": [
     {
-      "type": "info",
-      "message": "铂金(国际) 单日变动 -2.03%"
+      "type": "warning",
+      "message": "WTI原油(国际) 单日变动 -4.18%"
     },
     {
       "type": "info",
-      "message": "WTI原油(国际) 单日变动 -1.70%"
+      "message": "布伦特(国际) 单日变动 -2.15%"
     },
     {
-      "type": "info",
-      "message": "天然气(国际) 单日变动 -2.56%"
+      "type": "warning",
+      "message": "天然气(国际) 单日变动 -3.21%"
     },
     {
       "type": "warning",
@@ -167,7 +167,7 @@
     }
   ],
   "meta": {
-    "updated": "2026-09-29T15:11:11.571901",
+    "updated": "2026-09-29T23:59:21.934220",
     "source": "Commodities Monitor (GH Actions)"
   }
 }
