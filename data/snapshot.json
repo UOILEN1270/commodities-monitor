@@ -4,11 +4,11 @@
     "global": {
       "gold": 4181.1,
       "silver": 57.31,
-      "platinum": 1623.3,
-      "palladium": 1113.3,
+      "platinum": 1633.1,
+      "palladium": 1118.6,
       "copper": 6.57,
       "aluminum": 3093.5,
-      "wti": 99.02,
+      "wti": 101.41,
       "brent": 109.86,
       "natgas": 3.12
     },
@@ -58,11 +58,11 @@
       "global": {
         "gold": 0.0,
         "silver": 0.56,
-        "platinum": 0.0,
-        "palladium": 0.0,
+        "platinum": 0.6,
+        "palladium": 0.48,
         "copper": 0.61,
         "aluminum": -0.63,
-        "wti": -2.36,
+        "wti": 0.0,
         "brent": 0.0,
         "natgas": 0.0
       },
@@ -87,11 +87,11 @@
       "global": {
         "gold": -0.83,
         "silver": -6.13,
-        "platinum": -4.13,
-        "palladium": -3.22,
+        "platinum": -3.56,
+        "palladium": -2.76,
         "copper": -1.79,
         "aluminum": -2.87,
-        "wti": 7.81,
+        "wti": 10.41,
         "brent": 4.91,
         "natgas": -3.11
       },
@@ -116,11 +116,11 @@
       "global": {
         "gold": -5.32,
         "silver": -14.19,
-        "platinum": -10.05,
-        "palladium": -15.31,
+        "platinum": -9.5,
+        "palladium": -14.9,
         "copper": -2.23,
         "aluminum": -10.59,
-        "wti": 3.72,
+        "wti": 6.22,
         "brent": 11.23,
         "natgas": 7.59
       },
@@ -148,14 +148,9 @@
     "gold_copper_ratio": 636.4,
     "usdcny": 6.6862
   },
-  "alerts": [
-    {
-      "type": "info",
-      "message": "WTI原油(国际) 单日变动 -2.36%"
-    }
-  ],
+  "alerts": [],
   "meta": {
-    "updated": "2026-10-18T05:14:40.270893",
+    "updated": "2026-10-18T12:50:24.126349",
     "source": "Commodities Monitor (GH Actions)"
   }
 }
