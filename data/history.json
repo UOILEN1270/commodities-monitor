@@ -10744,15 +10744,15 @@
     },
     "2026-10-25": {
       "global": {
-        "gold": 4007.9,
-        "silver": 53.95,
-        "platinum": 1562.4,
-        "palladium": 1051.5,
-        "copper": 6.51,
-        "aluminum": 3136.75,
-        "wti": 103.27,
-        "brent": 111.7,
-        "natgas": 3.05
+        "gold": 4015.9,
+        "silver": 54.17,
+        "platinum": 1565.2,
+        "palladium": 1056.5,
+        "copper": 6.5,
+        "aluminum": 3150.0,
+        "wti": 101.95,
+        "brent": 110.47,
+        "natgas": 2.97
       },
       "domestic": {
         "au": 867.0,
