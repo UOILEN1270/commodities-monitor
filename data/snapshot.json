@@ -2,160 +2,164 @@
   "commodities": {
     "date": "2026-10-28",
     "global": {
-      "gold": 4044.0,
-      "silver": 53.96,
-      "platinum": 1536.3,
-      "palladium": 1026.0,
-      "copper": 6.64,
-      "aluminum": 3285.25,
-      "wti": 101.56,
-      "brent": 111.14,
-      "natgas": 3.07
+      "gold": 4056.7,
+      "silver": 53.68,
+      "platinum": 1547.6,
+      "palladium": 1014.5,
+      "copper": 6.65,
+      "aluminum": 3147.25,
+      "wti": 102.38,
+      "brent": 111.73,
+      "natgas": 3.04
     },
     "domestic": {
-      "au": 866.04,
-      "ag": 12961.0,
-      "cu": 109010.0,
-      "al": 23585.0,
-      "zn": 25790.0,
-      "ni": 118130.0,
-      "pb": 16260.0,
-      "sn": 386000.0,
+      "au": 871.72,
+      "ag": 13130.0,
+      "cu": 109500.0,
+      "al": 23465.0,
+      "zn": 25935.0,
+      "ni": 119000.0,
+      "pb": 16275.0,
+      "sn": 387630.0,
       "rb": 3043.0,
-      "hc": 3177.0,
-      "i": 662.0,
+      "hc": 3179.0,
+      "i": 672.0,
       "lc": 100020.0,
-      "jm": 1425.0,
-      "j": 1913.5
+      "jm": 1427.0,
+      "j": 1913.0
     },
     "spread": {
       "au": {
-        "global_cny_equiv": 866.89,
-        "domestic": 866.04,
-        "spread_pct": -0.1,
+        "global_cny_equiv": 869.47,
+        "domestic": 871.72,
+        "spread_pct": 0.26,
         "unit": "CNY/g"
       },
       "ag": {
-        "global_cny_equiv": 11567.13,
-        "domestic": 12961.0,
-        "spread_pct": 12.05,
+        "global_cny_equiv": 11505.21,
+        "domestic": 13130.0,
+        "spread_pct": 14.12,
         "unit": "CNY/kg"
       },
       "cu": {
-        "global_cny_equiv": 97604.0,
-        "domestic": 109010.0,
-        "spread_pct": 11.69,
+        "global_cny_equiv": 97734.0,
+        "domestic": 109500.0,
+        "spread_pct": 12.04,
         "unit": "CNY/tonne"
       },
       "al": {
-        "global_cny_equiv": 21904.4,
-        "domestic": 23585.0,
-        "spread_pct": 7.67,
+        "global_cny_equiv": 20980.83,
+        "domestic": 23465.0,
+        "spread_pct": 11.84,
         "unit": "CNY/tonne"
       }
     },
     "change_1d": {
       "global": {
-        "gold": -0.44,
-        "silver": -0.57,
-        "platinum": 0.2,
-        "palladium": -0.34,
-        "copper": 0.15,
-        "aluminum": 3.34,
-        "wti": 1.14,
-        "brent": 1.48,
-        "natgas": 2.33
+        "gold": -0.13,
+        "silver": -1.09,
+        "platinum": 0.93,
+        "palladium": -1.46,
+        "copper": 0.3,
+        "aluminum": -1.0,
+        "wti": 1.95,
+        "brent": 2.02,
+        "natgas": 1.33
       },
       "domestic": {
-        "au": 0.0,
-        "ag": 0.0,
-        "cu": 0.0,
-        "al": 0.0,
-        "zn": 0.0,
-        "ni": 0.0,
-        "pb": 0.0,
-        "sn": 0.0,
+        "au": 0.66,
+        "ag": 1.3,
+        "cu": 0.45,
+        "al": -0.51,
+        "zn": 0.56,
+        "ni": 0.74,
+        "pb": 0.09,
+        "sn": 0.42,
         "rb": 0.0,
-        "hc": 0.0,
-        "i": 0.0,
+        "hc": 0.06,
+        "i": 1.51,
         "lc": 3.97,
-        "jm": 0.0,
-        "j": 0.0
+        "jm": 0.14,
+        "j": -0.03
       }
     },
     "change_7d": {
       "global": {
-        "gold": -2.3,
-        "silver": -6.4,
-        "platinum": -5.57,
-        "palladium": -5.66,
-        "copper": 1.37,
-        "aluminum": 5.24,
-        "wti": 3.63,
-        "brent": 1.03,
-        "natgas": 10.83
+        "gold": -1.99,
+        "silver": -6.89,
+        "platinum": -4.87,
+        "palladium": -6.71,
+        "copper": 1.53,
+        "aluminum": 0.82,
+        "wti": 4.47,
+        "brent": 1.56,
+        "natgas": 9.75
       },
       "domestic": {
-        "au": -2.71,
-        "ag": -7.1,
-        "cu": 0.55,
-        "al": 2.57,
-        "zn": 0.62,
-        "ni": -2.85,
-        "pb": 0.96,
-        "sn": 0.27,
+        "au": -2.07,
+        "ag": -5.89,
+        "cu": 1.01,
+        "al": 2.04,
+        "zn": 1.19,
+        "ni": -2.14,
+        "pb": 1.06,
+        "sn": 0.69,
         "rb": -1.23,
-        "hc": -2.0,
-        "i": -2.58,
+        "hc": -1.94,
+        "i": -1.1,
         "lc": -1.07,
-        "jm": 1.06,
-        "j": -1.87
+        "jm": 1.21,
+        "j": -1.9
       }
     },
     "change_1m": {
       "global": {
-        "gold": -2.86,
-        "silver": -12.35,
-        "platinum": -11.77,
-        "palladium": -15.97,
-        "copper": 0.15,
-        "aluminum": -3.1,
-        "wti": 9.15,
-        "brent": 13.36,
-        "natgas": -1.6
+        "gold": -2.55,
+        "silver": -12.8,
+        "platinum": -11.12,
+        "palladium": -16.91,
+        "copper": 0.3,
+        "aluminum": -7.17,
+        "wti": 10.03,
+        "brent": 13.96,
+        "natgas": -2.56
       },
       "domestic": {
-        "au": -3.88,
-        "ag": -13.58,
-        "cu": -0.21,
-        "al": -1.73,
-        "zn": -2.7,
-        "ni": -4.33,
-        "pb": 0.37,
-        "sn": -5.74,
+        "au": -3.25,
+        "ag": -12.45,
+        "cu": 0.24,
+        "al": -2.23,
+        "zn": -2.15,
+        "ni": -3.63,
+        "pb": 0.46,
+        "sn": -5.35,
         "rb": -2.15,
-        "hc": -3.2,
-        "i": -6.1,
+        "hc": -3.14,
+        "i": -4.68,
         "lc": -19.21,
-        "jm": -2.46,
-        "j": -2.17
+        "jm": -2.33,
+        "j": -2.2
       }
     }
   },
   "indicators": {
-    "dxy": 102.43,
-    "gold_silver_ratio": 74.94,
-    "gold_copper_ratio": 609.0,
-    "usdcny": 6.6675
+    "dxy": 102.35,
+    "gold_silver_ratio": 75.57,
+    "gold_copper_ratio": 610.0,
+    "usdcny": 6.6664
   },
   "alerts": [
     {
-      "type": "warning",
-      "message": "铝(国际) 单日变动 +3.34%"
+      "type": "info",
+      "message": "WTI原油(国际) 单日变动 +1.95%"
     },
     {
       "type": "info",
-      "message": "天然气(国际) 单日变动 +2.33%"
+      "message": "布伦特(国际) 单日变动 +2.02%"
+    },
+    {
+      "type": "info",
+      "message": "铁矿石(国内) 单日变动 +1.51%"
     },
     {
       "type": "warning",
@@ -163,7 +167,7 @@
     }
   ],
   "meta": {
-    "updated": "2026-10-28T06:25:05.369496",
+    "updated": "2026-10-28T15:34:18.164950",
     "source": "Commodities Monitor (GH Actions)"
   }
 }
