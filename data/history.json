@@ -10947,14 +10947,14 @@
     },
     "2026-11-01": {
       "global": {
-        "gold": 3898.9,
-        "silver": 49.28,
-        "platinum": 1436.0,
-        "palladium": 987.7,
-        "copper": 6.48,
+        "gold": 3908.9,
+        "silver": 49.79,
+        "platinum": 1450.8,
+        "palladium": 990.0,
+        "copper": 6.51,
         "aluminum": 3167.5,
-        "wti": 104.12,
-        "brent": 113.43,
+        "wti": 102.38,
+        "brent": 111.58,
         "natgas": 2.9
       },
       "domestic": {
@@ -12081,7 +12081,7 @@
       "dxy": 101.88
     },
     "2026-11-01": {
-      "dxy": 101.88
+      "dxy": 101.97
     }
   },
   "meta": {
