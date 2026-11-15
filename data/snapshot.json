@@ -1,6 +1,6 @@
 {
   "commodities": {
-    "date": "2026-11-14",
+    "date": "2026-11-15",
     "global": {
       "gold": 3886.3,
       "silver": 49.03,
@@ -56,15 +56,15 @@
     },
     "change_1d": {
       "global": {
-        "gold": -0.01,
-        "silver": 0.02,
-        "platinum": -0.3,
-        "palladium": -0.2,
-        "copper": -0.33,
-        "aluminum": 0.42,
-        "wti": -0.09,
-        "brent": -0.09,
-        "natgas": 0.31
+        "gold": 0.0,
+        "silver": 0.0,
+        "platinum": 0.0,
+        "palladium": 0.0,
+        "copper": 0.0,
+        "aluminum": 0.0,
+        "wti": 0.0,
+        "brent": 0.0,
+        "natgas": 0.0
       },
       "domestic": {
         "au": 0.0,
@@ -86,11 +86,11 @@
     "change_7d": {
       "global": {
         "gold": -4.63,
-        "silver": -5.35,
-        "platinum": -3.23,
-        "palladium": -0.8,
-        "copper": -2.25,
-        "aluminum": -3.18,
+        "silver": -5.6,
+        "platinum": -3.15,
+        "palladium": -1.09,
+        "copper": -2.56,
+        "aluminum": -1.83,
         "wti": -2.5,
         "brent": -2.52,
         "natgas": 7.67
@@ -114,31 +114,31 @@
     },
     "change_1m": {
       "global": {
-        "gold": -7.14,
-        "silver": -14.6,
-        "platinum": -8.94,
-        "palladium": -11.37,
+        "gold": -7.18,
+        "silver": -14.18,
+        "platinum": -9.22,
+        "palladium": -9.78,
         "copper": -7.32,
-        "aluminum": 1.15,
-        "wti": -7.88,
-        "brent": -9.26,
-        "natgas": 0.62
+        "aluminum": 1.33,
+        "wti": -10.58,
+        "brent": -12.63,
+        "natgas": 3.53
       },
       "domestic": {
-        "au": -6.39,
-        "ag": -13.19,
-        "cu": -3.4,
-        "al": -3.88,
-        "zn": -1.23,
-        "ni": 6.05,
-        "pb": -1.77,
-        "sn": -5.16,
-        "rb": -1.14,
-        "hc": -1.85,
-        "i": -0.45,
-        "lc": -9.08,
-        "jm": -3.2,
-        "j": -0.15
+        "au": -6.75,
+        "ag": -14.68,
+        "cu": -4.41,
+        "al": -3.44,
+        "zn": -2.12,
+        "ni": 5.66,
+        "pb": -1.43,
+        "sn": -6.4,
+        "rb": -1.11,
+        "hc": -1.91,
+        "i": -0.59,
+        "lc": -9.01,
+        "jm": 0.0,
+        "j": 0.41
       }
     }
   },
@@ -150,7 +150,7 @@
   },
   "alerts": [],
   "meta": {
-    "updated": "2026-11-14T15:23:40.832343",
+    "updated": "2026-11-15T00:28:39.405050",
     "source": "Commodities Monitor (GH Actions)"
   }
 }
