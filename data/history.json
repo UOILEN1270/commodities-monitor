@@ -11557,14 +11557,14 @@
     "2026-11-22": {
       "global": {
         "gold": 3515.4,
-        "silver": 41.03,
-        "platinum": 1289.4,
-        "palladium": 891.7,
-        "copper": 5.48,
-        "aluminum": 2860.0,
-        "wti": 83.98,
-        "brent": 92.57,
-        "natgas": 3.41
+        "silver": 41.07,
+        "platinum": 1289.6,
+        "palladium": 893.1,
+        "copper": 5.49,
+        "aluminum": 2789.5,
+        "wti": 83.41,
+        "brent": 89.95,
+        "natgas": 3.75
       },
       "domestic": {
         "au": 771.0,
